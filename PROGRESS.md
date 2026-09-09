@@ -83,6 +83,8 @@ export type CandidateEvaluation = {
   - Built `BulkUploadForm` component with live status messaging, file selection, and **dynamic AI model selector** (`gemini-3.6-flash`, `gemini-3.5-flash`, `gemini-3.5-flash-lite`, `gemini-3.1-flash-lite`, `gemini-3-flash-preview`) for rate-limit mitigation using the user's Google AI Studio API key.
   - Built `CandidateDashboard` component with sorting by `overall_score` descending, real-time search, status filtering, and CSV Export (`exportEvaluationsToCSV`).
   - Created root layout and home page integrating all components.
+- **Documentation (`README.md`):**
+  - Created a comprehensive, beautifully formatted `README.md` explaining project purpose, tech stack, prerequisites, local setup instructions, database initialization, and project structure.
 
 ---
 
