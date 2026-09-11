@@ -3,9 +3,9 @@
 export type JobPosting = {
   id: string;
   title: string;
-  status: "draft" | "published" | "closed"; 
+  status: "draft" | "published" | "closed";
   required_skills: string[];
-  preferred_skills: string[]; 
+  preferred_skills: string[];
   min_years_experience: number;
   weightings: {
     experience_weight: number;
@@ -20,7 +20,7 @@ export type CandidateEvaluation = {
   job_id: string;
   candidate_name: string;
   email?: string;
-  status: 'QUALIFIED' | 'DISQUALIFIED';
+  status: "QUALIFIED" | "DISQUALIFIED";
   overall_score: number;
   disqualification_reason?: string;
   summary: string;

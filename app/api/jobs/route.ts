@@ -23,8 +23,12 @@ export async function GET() {
       status: "published",
       required_skills: ["React", "TypeScript", "Node.js", "Next.js"],
       preferred_skills: ["Tailwind CSS", "PostgreSQL", "Docker", "GraphQL"],
-      min_years_experience: 3,
-      weightings: { experience_weight: 40, skills_weight: 40, education_weight: 20 },
+      min_years_experience: 0,
+      weightings: {
+        experience_weight: 40,
+        skills_weight: 40,
+        education_weight: 20,
+      },
       created_at: new Date().toISOString(),
     };
     return NextResponse.json({ success: true, jobs: [defaultJob] });
@@ -34,10 +38,19 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { title, min_years_experience, required_skills, preferred_skills, weightings } = body;
+    const {
+      title,
+      min_years_experience,
+      required_skills,
+      preferred_skills,
+      weightings,
+    } = body;
 
     if (!title) {
-      return NextResponse.json({ error: "Job title is required." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Job title is required." },
+        { status: 400 },
+      );
     }
 
     const newJob: JobPosting = {
@@ -45,9 +58,23 @@ export async function POST(req: NextRequest) {
       title,
       status: "published",
       min_years_experience: Number(min_years_experience) || 0,
-      required_skills: Array.isArray(required_skills) ? required_skills : (required_skills || "").split(',').map((s: string) => s.trim()).filter(Boolean),
-      preferred_skills: Array.isArray(preferred_skills) ? preferred_skills : (preferred_skills || "").split(',').map((s: string) => s.trim()).filter(Boolean),
-      weightings: weightings || { experience_weight: 40, skills_weight: 40, education_weight: 20 },
+      required_skills: Array.isArray(required_skills)
+        ? required_skills
+        : (required_skills || "")
+            .split(",")
+            .map((s: string) => s.trim())
+            .filter(Boolean),
+      preferred_skills: Array.isArray(preferred_skills)
+        ? preferred_skills
+        : (preferred_skills || "")
+            .split(",")
+            .map((s: string) => s.trim())
+            .filter(Boolean),
+      weightings: weightings || {
+        experience_weight: 40,
+        skills_weight: 40,
+        education_weight: 20,
+      },
       created_at: new Date().toISOString(),
     };
 
@@ -58,13 +85,19 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) {
-      console.warn("Supabase job insert warning (returning local newJob):", error.message);
+      console.warn(
+        "Supabase job insert warning (returning local newJob):",
+        error.message,
+      );
       return NextResponse.json({ success: true, job: newJob });
     }
 
     return NextResponse.json({ success: true, job: data });
   } catch (err) {
     console.error("Error creating job posting:", err);
-    return NextResponse.json({ error: "Internal server error creating job posting." }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error creating job posting." },
+      { status: 500 },
+    );
   }
 }
